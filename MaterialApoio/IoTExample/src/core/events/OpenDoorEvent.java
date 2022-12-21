@@ -1,4 +1,4 @@
-package core.sensores;
+package core.events;
 
 import com.bezirk.middleware.messages.Event;
 

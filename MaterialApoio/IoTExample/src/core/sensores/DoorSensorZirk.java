@@ -2,7 +2,7 @@ package core.sensores;
 
 
 
-import core.AirQualityUpdateEvent;
+import core.events.OpenDoorEvent;
 import i18n.I18N;
 import static i18n.Messages.DEVICE_RUNNING;
 
