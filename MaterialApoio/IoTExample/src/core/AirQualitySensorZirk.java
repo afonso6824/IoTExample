@@ -48,7 +48,7 @@ public class AirQualitySensorZirk{
             }
         }, 1000, 1000);
     }
-    
+    //siauoidashoif
     public static void main(String args[]) throws InterruptedException {
         AirQualitySensorZirk airQualitySensorZirk = new AirQualitySensorZirk();
         System.err.println("This product has an Air Quality Sensor");
