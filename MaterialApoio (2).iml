@@ -2,7 +2,19 @@
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="AspectJ" name="AspectJ">
-      <configuration />
+      <configuration>
+        <option name="aspectPath">
+          <projectLibrary>
+            <option name="name" value="lib" />
+          </projectLibrary>
+          <projectLibrary>
+            <option name="name" value="aspectj-1.9.7" />
+          </projectLibrary>
+          <projectLibrary>
+            <option name="name" value="lib (2)" />
+          </projectLibrary>
+        </option>
+      </configuration>
     </facet>
     <facet type="android" name="Android">
       <configuration />
@@ -19,5 +31,14 @@
     <orderEntry type="library" name="aspectj-1.9.7" level="project" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="lib (2)" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/aspectj1.9/lib/aspectjrt.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
