@@ -1,12 +1,14 @@
 package components.sensores;
 
 
-
 import com.bezirk.middleware.Bezirk;
 import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import utils.eventos.OpenDoorEvent;
 
 import java.util.Scanner;
+
+import utils.I18N;
+import static utils.Messages.DEVICE_RUNNING;
 
 public class DoorSensorZirk {
     private Bezirk bezirk;
@@ -40,13 +42,13 @@ public class DoorSensorZirk {
             case 9:
                 printMenu();
                 break;
-            case 0:
+            case 1:
                 doorOpen = true;
                 OpenDoorEvent openDoorEvent = new OpenDoorEvent();
                 bezirk.sendEvent(openDoorEvent);
                 System.err.println("Published open door update: " + openDoorEvent.toString());
                 break;
-            case 1:
+            case 2:
                 doorOpen = false;
                 System.err.println("Door closed");
                 break;
@@ -58,8 +60,8 @@ public class DoorSensorZirk {
         System.err.println("* This is a Mock sensor that uses de input values to simulate a real movement input. *");
         System.err.println("+************************************************************************************+");
         System.err.println("");
-        System.err.println("0 - Open Door");
-        System.err.println("1 - Close Door");
+        System.err.println("1 - Open Door");
+        System.err.println("2 - Close Door");
         System.err.println("8 - Stop sensor");
         System.err.println("9 - Help");
     }
@@ -70,6 +72,7 @@ public class DoorSensorZirk {
         //TODO fix null pointer exception
         //System.err.println(I18N.getString(DEVICE_RUNNING, "Door Movement Sensor"));
         printMenu();
+
         doorSensorZirk.start();
     }
 }

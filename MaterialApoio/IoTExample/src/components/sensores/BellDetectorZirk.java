@@ -7,10 +7,12 @@ import utils.eventos.OpenDoorEvent;
 
 import java.util.Scanner;
 
+import utils.I18N;
+import static utils.Messages.DEVICE_RUNNING;
+
 public class BellDetectorZirk {
     private Bezirk bezirk;
 
-    private Boolean bellRung = false;
     private Boolean online = true;
 
     //TODO ver parte dos aspects na lingua, ou seja como por as coisas a mandarem mensagens no idioma escolhido
@@ -18,6 +20,31 @@ public class BellDetectorZirk {
         BezirkMiddleware.initialize();
         bezirk = BezirkMiddleware.registerZirk("Door Bell Detector Zirk");
         System.err.println("Got Bezirk instance");
+    }
+
+    private void processInput(int in) {
+        switch (in) {
+            case 8:
+                online = false;
+                System.err.println("Sensor Stopped");
+                System.exit(0);
+                break;
+            case 9:
+                printMenu();
+                break;
+            case 1:
+                OpenDoorEvent openDoorEvent = new OpenDoorEvent();
+                bezirk.sendEvent(openDoorEvent);
+                System.err.println("Published bell rung update: " + openDoorEvent.toString());
+
+                try {//TODO change to different spot??
+                    this.wait(5000);
+                } catch (InterruptedException e) {
+                    System.err.println("Bell detector couldn't wait 5 sec before resetting");
+                }
+                System.err.println("Bell ringing stopped");
+                break;
+        }
     }
 
     private void start() {
@@ -28,40 +55,12 @@ public class BellDetectorZirk {
         }
     }
 
-    //TODO ver se vale a pena mandar evento periodico
-    private void processInput(int in) {
-        switch (in) {
-            case 8:
-                bellRung = false;
-                online = false;
-                System.err.println("Sensor Stopped");
-                System.exit(0);
-                break;
-            case 9:
-                printMenu();
-                break;
-            case 0:
-                bellRung = true;
-                OpenDoorEvent openDoorEvent = new OpenDoorEvent();
-                bezirk.sendEvent(openDoorEvent);
-                System.err.println("Published open door update: " + openDoorEvent.toString());
-                try {
-                    this.wait(5000);
-                } catch (InterruptedException e) {
-                    System.err.println("Bell detector couldn't wait 5 sec before resetting");
-                }
-                bellRung = false;
-                System.err.println("Bell ringing stopped");
-                break;
-        }
-    }
-
     private static void printMenu() {
-        System.err.println("+************************************************************************************+");
-        System.err.println("* This is a Mock sensor that uses de input values to simulate a real movement input. *");
-        System.err.println("+************************************************************************************+");
+        System.err.println("+***************************************************************************************+");
+        System.err.println("* This is a door bell detector Mock that uses de input values to simulate a real input. *");
+        System.err.println("+***************************************************************************************+");
         System.err.println("");
-        System.err.println("0 - Ring Bell(last 5 sec)");
+        System.err.println("1 - Ring Bell(last 5 sec)");
         System.err.println("8 - Stop sensor");
         System.err.println("9 - Help");
     }
