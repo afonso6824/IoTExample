@@ -8,6 +8,7 @@ import com.bezirk.middleware.messages.EventSet;
 
 import components.sensores.CommandDetectorZirk;
 
+import utils.eventos.BellRungEvent;
 import utils.eventos.ButtonPressedEvent;
 
 import utils.I18N;
@@ -15,40 +16,36 @@ import static utils.Messages.*;
 
 public class AnalizaComando {
 
-//    public AsthmaAssistantZirk() {
-//        BezirkMiddleware.initialize();
-//        final Bezirk bezirk = BezirkMiddleware.registerZirk("Asthma Assistant Zirk");
-//        System.err.println("Got Bezirk instance");
-//
-//        final EventSet airQualityEvents = new EventSet(AirQualityUpdateEvent.class);
-//
-//        airQualityEvents.setEventReceiver(new EventSet.EventReceiver() {
-//            @Override
-//            public void receiveEvent(Event event, ZirkEndPoint sender) {
-//                //Check if this event is of interest
-//                if (event instanceof AirQualityUpdateEvent) {
-//                    final AirQualityUpdateEvent aqUpdate = (AirQualityUpdateEvent) event;
-//                    System.err.println("\nReceived air quality update: " + aqUpdate.toString());
-//
-//                    //do something in response to this event
-//                    if (aqUpdate.getHumidity() > 0.7) {
-//                        System.out.println(I18N.getString(HUMIDITY_MSG));
-//                    }
-//                    if (aqUpdate.getDustLevel() > 20) {
-//                        System.out.println(I18N.getString(DUST_MSG));
-//                    }
-//                    if (aqUpdate.getPollenLevel() > 500) {
-//                        System.out.println(I18N.getString(POLLEN_MSG));
-//                    }
-//                }
-//            }
-//        });
-//        bezirk.subscribe(airQualityEvents);
-//    }
-//
-//    public static void main(String args[]) {
-//        new AsthmaAssistantZirk();
-//        System.err.println("This product has an Asthma Assistant");
-//    }
+    public AnalizaComando() {
+        BezirkMiddleware.initialize();
+        final Bezirk bezirk = BezirkMiddleware.registerZirk("Analiza Comando Zirk");
+        System.err.println("Got Bezirk instance");
+        final EventSet buttonPressedEvents = new EventSet(ButtonPressedEvent.class);
+
+        buttonPressedEvents.setEventReceiver(new EventSet.EventReceiver() {
+            @Override
+            public void receiveEvent(Event event, ZirkEndPoint sender) {
+                if (event instanceof ButtonPressedEvent) {
+                    final ButtonPressedEvent buttonEvent = (ButtonPressedEvent) event;
+                    System.err.println("\nReceived air quality update: " + buttonEvent.toString());
+                    //do something
+                    //TODO case 1 mensagem exterior e aviso
+                    //TODO case 2 comando + lampadas apagar luzes
+                    //todo case 3 comando + sirene ativar sirene
+                    //todo case 4 comando + fechadura abrir porta
+
+                }
+            }
+        });
+        bezirk.subscribe(buttonPressedEvents);
+    }
+
+
+
+
+    public static void main(String args[]) {
+        new AnalizaComando();
+        System.err.println("This product has an Analiza Campainha");
+    }
 
 }

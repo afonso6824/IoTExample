@@ -15,40 +15,30 @@ import static utils.Messages.*;
 
 public class AnalizaPorta {
 
-//    public AsthmaAssistantZirk() {
-//        BezirkMiddleware.initialize();
-//        final Bezirk bezirk = BezirkMiddleware.registerZirk("Asthma Assistant Zirk");
-//        System.err.println("Got Bezirk instance");
-//
-//        final EventSet airQualityEvents = new EventSet(AirQualityUpdateEvent.class);
-//
-//        airQualityEvents.setEventReceiver(new EventSet.EventReceiver() {
-//            @Override
-//            public void receiveEvent(Event event, ZirkEndPoint sender) {
-//                //Check if this event is of interest
-//                if (event instanceof AirQualityUpdateEvent) {
-//                    final AirQualityUpdateEvent aqUpdate = (AirQualityUpdateEvent) event;
-//                    System.err.println("\nReceived air quality update: " + aqUpdate.toString());
-//
-//                    //do something in response to this event
-//                    if (aqUpdate.getHumidity() > 0.7) {
-//                        System.out.println(I18N.getString(HUMIDITY_MSG));
-//                    }
-//                    if (aqUpdate.getDustLevel() > 20) {
-//                        System.out.println(I18N.getString(DUST_MSG));
-//                    }
-//                    if (aqUpdate.getPollenLevel() > 500) {
-//                        System.out.println(I18N.getString(POLLEN_MSG));
-//                    }
-//                }
-//            }
-//        });
-//        bezirk.subscribe(airQualityEvents);
-//    }
-//
-//    public static void main(String args[]) {
-//        new AsthmaAssistantZirk();
-//        System.err.println("This product has an Asthma Assistant");
-//    }
+    public AnalizaPorta() {
+        BezirkMiddleware.initialize();
+        final Bezirk bezirk = BezirkMiddleware.registerZirk("Analiza Porta Zirk");
+        System.err.println("Got Bezirk instance");
+        final EventSet openDoorEvents = new EventSet(OpenDoorEvent.class);
+
+        openDoorEvents.setEventReceiver(new EventSet.EventReceiver() {
+            @Override
+                public void receiveEvent(Event event, ZirkEndPoint sender) {
+                if (event instanceof OpenDoorEvent) {
+                    final OpenDoorEvent doorEvent = (OpenDoorEvent) event;
+                    System.err.println("\nReceived air quality update: " + doorEvent.toString());
+                    //do something
+                    //TODO enviar mensagem
+                }
+            }
+        });
+        bezirk.subscribe(openDoorEvents);
+    }
+
+    public static void main(String[] args) {
+        new AnalizaPorta();
+        System.err.println("This product has an Analiza Porta");
+
+    }
 
 }

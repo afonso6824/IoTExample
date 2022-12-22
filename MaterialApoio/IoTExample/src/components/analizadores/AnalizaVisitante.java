@@ -9,6 +9,7 @@ import com.bezirk.middleware.messages.EventSet;
 import components.sensores.DoorSensorZirk;
 import components.sensores.BellDetectorZirk;
 
+import utils.eventos.ButtonPressedEvent;
 import utils.eventos.OpenDoorEvent;
 import utils.eventos.BellRungEvent;
 
@@ -16,41 +17,37 @@ import utils.I18N;
 import static utils.Messages.*;
 
 public class AnalizaVisitante {
+    public AnalizaVisitante() {
+        BezirkMiddleware.initialize();
+        final Bezirk bezirk = BezirkMiddleware.registerZirk("Analiza Visitante Zirk");
+        System.err.println("Got Bezirk instance");
+        //todo
+        final EventSet openDoorEvents = new EventSet(OpenDoorEvent.class);
+        final EventSet bellRungEvents = new EventSet(BellRungEvent.class);
 
-//    public AsthmaAssistantZirk() {
-//        BezirkMiddleware.initialize();
-//        final Bezirk bezirk = BezirkMiddleware.registerZirk("Asthma Assistant Zirk");
-//        System.err.println("Got Bezirk instance");
-//
-//        final EventSet airQualityEvents = new EventSet(AirQualityUpdateEvent.class);
-//
-//        airQualityEvents.setEventReceiver(new EventSet.EventReceiver() {
-//            @Override
-//            public void receiveEvent(Event event, ZirkEndPoint sender) {
-//                //Check if this event is of interest
-//                if (event instanceof AirQualityUpdateEvent) {
-//                    final AirQualityUpdateEvent aqUpdate = (AirQualityUpdateEvent) event;
-//                    System.err.println("\nReceived air quality update: " + aqUpdate.toString());
-//
-//                    //do something in response to this event
-//                    if (aqUpdate.getHumidity() > 0.7) {
-//                        System.out.println(I18N.getString(HUMIDITY_MSG));
-//                    }
-//                    if (aqUpdate.getDustLevel() > 20) {
-//                        System.out.println(I18N.getString(DUST_MSG));
-//                    }
-//                    if (aqUpdate.getPollenLevel() > 500) {
-//                        System.out.println(I18N.getString(POLLEN_MSG));
-//                    }
-//                }
-//            }
-//        });
-//        bezirk.subscribe(airQualityEvents);
-//    }
-//
-//    public static void main(String args[]) {
-//        new AsthmaAssistantZirk();
-//        System.err.println("This product has an Asthma Assistant");
-//    }
+       /* buttonPressedEvents.setEventReceiver(new EventSet.EventReceiver() {
+            @Override
+            public void receiveEvent(Event event, ZirkEndPoint sender) {
+                if (event instanceof ButtonPressedEvent) {
+                    final ButtonPressedEvent buttonEvent = (ButtonPressedEvent) event;
+                    System.err.println("\nReceived air quality update: " + buttonEvent.toString());
+                    //do something
+                    //TODO ver se apos toque campainha se porta aberta no periodo definido e enviar mensagem exterior
+
+
+                }
+            }
+        });*/
+        bezirk.subscribe(openDoorEvents);
+        bezirk.subscribe(bellRungEvents);
+    }
+
+
+
+
+    public static void main(String args[]) {
+        new AnalizaVisitante();
+        System.err.println("This product has an Analiza Visitante");
+    }
 
 }
