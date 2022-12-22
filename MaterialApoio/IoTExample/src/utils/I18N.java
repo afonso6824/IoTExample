@@ -22,7 +22,8 @@ public class I18N {
 	private static I18N instance;
 
 	static void setInstance(I18N i18n) {
-		 instance = i18n;
+
+		instance = i18n;
 	}
 	
 	public static I18N getInstance() {
