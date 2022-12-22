@@ -1,4 +1,4 @@
-package i18n;
+package utils;
 
 import java.text.MessageFormat;
 import java.util.Locale;
@@ -10,7 +10,7 @@ public class I18N {
 
 	I18N(String language, String country) {
 		Locale locale = new Locale(language, country);
-		this.bundle = ResourceBundle.getBundle("i18n/Messages", locale);
+		this.bundle = ResourceBundle.getBundle("utils/Messages", locale);
 	}
 
 	private String getString(Messages key) {

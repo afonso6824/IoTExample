@@ -1,4 +1,4 @@
-package core;
+package components;
 import com.bezirk.middleware.messages.Event;
 
 public class AirQualityUpdateEvent extends Event {

@@ -1,8 +1,9 @@
-package core;
-import i18n.I18N;
-import static i18n.Messages.HUMIDITY_MSG;
-import static i18n.Messages.POLLEN_MSG;
-import static i18n.Messages.DUST_MSG;
+package components;
+
+import utils.I18N;
+import static utils.Messages.HUMIDITY_MSG;
+import static utils.Messages.POLLEN_MSG;
+import static utils.Messages.DUST_MSG;
 
 import com.bezirk.middleware.Bezirk;
 import com.bezirk.middleware.addressing.ZirkEndPoint;

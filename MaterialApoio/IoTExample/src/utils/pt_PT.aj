@@ -1,4 +1,4 @@
-package i18n;
+package utils;
 
 aspect pt_PT {
 	before() : execution(* *.main(..)) {

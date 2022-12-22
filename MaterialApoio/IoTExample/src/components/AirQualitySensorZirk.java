@@ -1,23 +1,24 @@
-package core.sensores;
+package components;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import utils.I18N;
+import static utils.Messages.DEVICE_RUNNING;
 
 import com.bezirk.middleware.Bezirk;
 import com.bezirk.middleware.java.proxy.BezirkMiddleware;
-import i18n.I18N;
 
-import static i18n.Messages.DEVICE_RUNNING;
-
-public class CommandDetectorZirk {
+public class AirQualitySensorZirk{
     private Bezirk bezirk;
 
-    //TODO ver parte dos aspects na lingua, ou seja como por as coisas a mandarem emnsagens no idioma escolhido
-    public CommandDetectorZirk() {
+    public AirQualitySensorZirk() {
         BezirkMiddleware.initialize();
-        bezirk = BezirkMiddleware.registerZirk("Command Detector Zirk");
+        bezirk = BezirkMiddleware.registerZirk("Air Quality Sensor Zirk");
         System.err.println("Got Bezirk instance");
     }
 
-    /*public void sendAirQualityUpdate() {
+    public void sendAirQualityUpdate() {
     	//produces some  values since this is a mock
         final double humidity = 0.8;
         final int dustLevel = 30;
@@ -47,12 +48,13 @@ public class CommandDetectorZirk {
             }
         }, 1000, 1000);
     }
-    */
+    //siauoidashoif
     public static void main(String args[]) throws InterruptedException {
-        CommandDetectorZirk commandDetectorZirk = new CommandDetectorZirk();
-        System.err.println("This product has an Command Detector");
-        System.err.println(I18N.getString(DEVICE_RUNNING, "Command Detector"));
-
-
+        AirQualitySensorZirk airQualitySensorZirk = new AirQualitySensorZirk();
+        System.err.println("This product has an Air Quality Sensor");
+        
+        System.err.println(I18N.getString(DEVICE_RUNNING, "Air Quality Sensor"));
+        airQualitySensorZirk.sendAirQualityUpdate();
+        airQualitySensorZirk.sendPeriodiclyAirQualityUpdate();
      }
 }
