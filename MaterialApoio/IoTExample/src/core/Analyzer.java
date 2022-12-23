@@ -5,7 +5,6 @@ import com.bezirk.middleware.addressing.ZirkEndPoint;
 import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import com.bezirk.middleware.messages.Event;
 import com.bezirk.middleware.messages.EventSet;
-import componentes.analizadores.AnalizaPorta;
 import utils.eventos.*;
 
 import java.util.Scanner;

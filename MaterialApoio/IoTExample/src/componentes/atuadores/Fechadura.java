@@ -6,7 +6,11 @@ import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import com.bezirk.middleware.messages.Event;
 import com.bezirk.middleware.messages.EventSet;
 
+import utils.I18N;
+import utils.Messages;
 import utils.eventos.DoorUnlockedEvent;
+
+import static utils.Messages.LOCK_ANNOUNCEMENT;
 
 
 public class Fechadura {
@@ -18,6 +22,7 @@ public class Fechadura {
     public Fechadura(int code){
         BezirkMiddleware.initialize();
         Bezirk bezirk = BezirkMiddleware.registerZirk("Lock Zirk");
+        //todo mudar para aspect todos os got bezirk
         System.err.println("Got Bezirk instance");
         fechaduraController = new FechaduraController(code);
 
@@ -27,14 +32,10 @@ public class Fechadura {
             @Override
             public void receiveEvent(Event event, ZirkEndPoint sender) {
                 if (event instanceof DoorUnlockedEvent) {
-                    final DoorUnlockedEvent doorUnlockedEvent = (DoorUnlockedEvent) event;
-                    System.err.println("\nReceived air quality update: " + doorUnlockedEvent.toString());
                     fechaduraController.openDoor();
-                    System.out.println(fechaduraController.toString());
                 }
             }
         });
-        //todo fechar porta
     }
 
     @Override
@@ -44,6 +45,6 @@ public class Fechadura {
 
     public static void main(String[] args) {
         Fechadura fechadura = new Fechadura();
-        System.out.println(fechadura.toString());
+        System.out.println(I18N.getString(LOCK_ANNOUNCEMENT));
     }
 }

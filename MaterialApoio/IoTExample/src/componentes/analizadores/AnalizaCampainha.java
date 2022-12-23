@@ -6,7 +6,11 @@ import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import com.bezirk.middleware.messages.Event;
 import com.bezirk.middleware.messages.EventSet;
 
+import utils.I18N;
 import utils.eventos.BellRungEvent;
+
+import static utils.Messages.BELL_ANALYZER_ANNOUNCEMENT;
+import static utils.Messages.COMMAND_ANALYZER_ANNOUNCEMENT;
 
 
 public class AnalizaCampainha {
@@ -21,7 +25,7 @@ public class AnalizaCampainha {
             public void receiveEvent(Event event, ZirkEndPoint sender) {
                 if (event instanceof BellRungEvent) {
                     final BellRungEvent bellEvent = (BellRungEvent) event;
-                    System.err.println("\nReceived air quality update: " + bellEvent.toString());
+
                     //do something
                     //TODO se tem sirene faz soar sirene else aviso
 
@@ -36,7 +40,7 @@ public class AnalizaCampainha {
 
    public static void main(String args[]) {
         new AnalizaCampainha();
-        System.err.println("This product has an Analiza Campainha");
+       System.out.println(I18N.getString(BELL_ANALYZER_ANNOUNCEMENT));
     }
 
 }

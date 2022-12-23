@@ -6,11 +6,15 @@ import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import com.bezirk.middleware.messages.Event;
 import com.bezirk.middleware.messages.EventSet;
 
+import utils.I18N;
 import utils.eventos.CloseDoorEvent;
 import utils.eventos.OpenDoorEvent;
 import utils.eventos.SendWarningEvent;
 
 import java.sql.Time;
+
+import static utils.Messages.DOOR_ANALYZER_ANNOUNCEMENT;
+import static utils.Messages.VISITOR_ANALYZER_ANNOUNCEMENT;
 
 public class AnalizaPorta {
     private Time periodo;
@@ -28,7 +32,7 @@ public class AnalizaPorta {
                 public void receiveEvent(Event event, ZirkEndPoint sender) {
                 if (event instanceof OpenDoorEvent) {
                     final OpenDoorEvent doorEvent = (OpenDoorEvent) event;
-                    System.err.println("\nReceived air quality update: " + doorEvent.toString());
+
                     //do something
                     SendWarningEvent sendWarningEvent = new SendWarningEvent("porta aberta Ha pelo menos x tempo");
                     bezirk.sendEvent(sendWarningEvent);
@@ -41,7 +45,7 @@ public class AnalizaPorta {
 
     public static void main(String[] args) {
         new AnalizaPorta();
-        System.err.println("This product has an Analiza Porta");
+        System.out.println(I18N.getString(DOOR_ANALYZER_ANNOUNCEMENT));
 
     }
 
