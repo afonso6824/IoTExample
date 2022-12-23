@@ -5,8 +5,6 @@ import com.bezirk.middleware.messages.Event;
 public class SendWarningEvent extends Event {
     private String msg;
 
-    private static final long serialVersionUID = 1L;
-
     public SendWarningEvent(String msg){
        this.msg=msg;
     }

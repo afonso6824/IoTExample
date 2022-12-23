@@ -5,8 +5,6 @@ import core.TipoMensagem;
 
 public class SendMessageEvent extends Event {
 
-    //TODO recheck ID
-    private static final long serialVersionUID = 1L;
     private final String Message;
     private final TipoMensagem tm;
 

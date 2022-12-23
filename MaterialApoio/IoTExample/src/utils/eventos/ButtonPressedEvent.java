@@ -4,8 +4,6 @@ import com.bezirk.middleware.messages.Event;
 
 public class ButtonPressedEvent extends Event {
 
-    //TODO recheck ID
-    private static final long serialVersionUID = 1L;
     private final int buttonPressed;
     public ButtonPressedEvent(int number){
         buttonPressed = number;

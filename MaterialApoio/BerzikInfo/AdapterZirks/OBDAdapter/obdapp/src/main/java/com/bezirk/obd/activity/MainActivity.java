@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                         int position = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
                         String deviceAddress = devices.get(position).toString();
                         System.out.println("deviceaddress::"+deviceStrs.get(position) +        "        "+position);
-                        // TODO save deviceAddress
+                        // TO DO save deviceAddress
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putInt(Constants.BLUETOOTH_DEVICE_POS_SELECTED,position).apply();
                         editor.putString(Constants.BLUETOOTH_DEVICE_ADD_SELECTED,deviceAddress).apply();

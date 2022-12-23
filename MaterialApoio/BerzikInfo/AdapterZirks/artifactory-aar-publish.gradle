@@ -17,7 +17,7 @@ publishing {
                     dependency.appendNode('artifactId', it.moduleName)
                     dependency.appendNode('version', it.moduleVersion)
 
-                    //TODO automatically find android library projects and set their type attribute to aar
+                    //TO DO automatically find android library projects and set their type attribute to aar
                     //android libraries added as aar dependencies for transitive resolution through pom.xml
                     if(it.moduleName == "android-comms-zyre-jni" || it.moduleName == "zyre-jni" || it.moduleName == "android-starter"){
                         dependency.appendNode('type', 'aar')
