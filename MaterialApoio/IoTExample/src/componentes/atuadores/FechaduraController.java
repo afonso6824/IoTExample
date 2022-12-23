@@ -27,13 +27,4 @@ public class FechaduraController {
         System.out.println(I18N.getString(DOOR_CLOSED));
     }
 
-    @Override
-    public String toString() {
-        if (door.isOpen()){
-            //TODO delete
-            return "Door is open";
-        }else {
-            return "Door is closed";
-        }
-    }
 }

@@ -14,28 +14,19 @@ public class CreateReminderEvent extends Event {
     private Date[] periodo;
     private Time periodicidade = null;
 
-    private TipoMensagem tipoMensagem ;
 
 
-
-    public CreateReminderEvent(String title, String periodo) throws ParseException {
+    public CreateReminderEvent(String title, Date[] periodo) throws ParseException {
         this(title,periodo,"00:00:00");
     }
 
-    public CreateReminderEvent(String title, String periodo, String periodicidade) throws ParseException {
-       this(title,periodo,periodicidade, TipoMensagem.SMS);
 
-    }
-    public CreateReminderEvent(String title, String periodo, String periodicidade, TipoMensagem tm) throws ParseException {
+    public CreateReminderEvent(String title, Date[] periodo, String periodicidade) throws ParseException {
         this.title = title;
-        this.periodo = new Date[2];
-        String[] temp =periodo.split("-");
-        SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy;HH:mm");
-        for (int i = 0; i < 2; i++) {
-            this.periodo[i] = sf.parse(temp[i]);
-        }
-        this.periodicidade = Time.valueOf(periodicidade);
-        this.tipoMensagem = tm;
+        this.periodo = periodo;
+        if (periodicidade != "")
+            this.periodicidade = Time.valueOf(periodicidade);
+
     }
 
     public String getTitle() {
@@ -55,7 +46,4 @@ public class CreateReminderEvent extends Event {
         return "The lembrete event";
     }
 
-    //todo gestor lembretes
-    //todo lembrete
-    //todo lembrete bd????
 }

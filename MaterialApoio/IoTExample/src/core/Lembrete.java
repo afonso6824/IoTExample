@@ -31,5 +31,4 @@ public class Lembrete {
         return title;
     }
 
-    //TODO toString
 }

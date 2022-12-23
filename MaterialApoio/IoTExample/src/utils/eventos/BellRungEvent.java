@@ -2,6 +2,8 @@ package utils.eventos;
 
 import com.bezirk.middleware.messages.Event;
 
+import java.util.Date;
+
 //VISTO
 public class BellRungEvent extends Event {
 
@@ -9,6 +11,7 @@ public class BellRungEvent extends Event {
     private final boolean bellRung;
     public BellRungEvent(){
         bellRung = true;
+
     }
 
     public String toString() {

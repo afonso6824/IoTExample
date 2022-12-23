@@ -19,7 +19,6 @@ public class AnalizaPorta {
     private Time periodo;
     private Bezirk bezirk;
     public AnalizaPorta() {
-        //TODO VER PERIODO E ADICIONAR EVENTO
         BezirkMiddleware.initialize();
          bezirk = BezirkMiddleware.registerZirk("Analiza Porta Zirk");
         System.err.println(ZIRK_INSTANCE);
@@ -27,12 +26,10 @@ public class AnalizaPorta {
 
         openDoorEvents.setEventReceiver(new EventSet.EventReceiver() {
             @Override
-            //todo ver como fazer a parte de esperar
+
                 public void receiveEvent(Event event, ZirkEndPoint sender) {
                 if (event instanceof OpenDoorEvent) {
                     final OpenDoorEvent doorEvent = (OpenDoorEvent) event;
-
-                    //do something
                     SendWarningEvent sendWarningEvent = new SendWarningEvent("porta aberta Ha pelo menos x tempo");
                     bezirk.sendEvent(sendWarningEvent);
 

@@ -5,9 +5,22 @@ import com.bezirk.middleware.addressing.ZirkEndPoint;
 import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import com.bezirk.middleware.messages.Event;
 import com.bezirk.middleware.messages.EventSet;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import utils.I18N;
 import utils.eventos.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
 import java.util.Scanner;
+
+import static utils.Messages.ANALYZER_MENU;
+import static utils.Messages.BELL_DETECTOR_MENU;
 
 public class Analyzer {
     private static Bezirk bezirk;
@@ -49,7 +62,7 @@ public class Analyzer {
                 if (event instanceof SendMessageEvent) {
                     final SendMessageEvent sendMessageEvent = (SendMessageEvent) event;
                     System.err.println("\nReceived air quality update: " + sendMessageEvent.toString());
-                    ext.sendMessage(sendMessageEvent.getMessage(),sendMessageEvent.getTm());
+                    ext.sendMessage(sendMessageEvent.getMessage());
                 }
 
                 if (event instanceof SendWarningEvent) {
@@ -61,17 +74,27 @@ public class Analyzer {
         });
         bezirk.subscribe(lembretesEvents);
     }
-    private static void processInput(int in) {
+    private static void processInput(int in) throws ParseException {
         switch (in) {
             case 9:
-                printMenu();
+                System.out.println(I18N.getString(ANALYZER_MENU));
                 break;
             case 1:
                 Scanner s = new Scanner(System.in);
-                System.err.println("Introduza os dados:");
-                String msg = s.nextLine();
-                //todo filtrar a mensagem
-                //CreateReminderEvent createReminderEvent = new CreateReminderEvent();
+                System.out.println("Introduza o titulo:");
+                String title = s.nextLine();
+                System.err.println("Introduza 1ª data:");
+                String data1 = s.nextLine();
+                System.err.println("Introduza 2ª data:");
+                String data2 = s.nextLine();
+                Date[] time = new Date[2];
+                time[0 ]= new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data1);
+                time[1 ]= new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data2);
+                System.out.println("Introduza o periodicidade:");
+                String period = s.nextLine();
+
+
+                CreateReminderEvent createReminderEvent = new CreateReminderEvent(title,time,period);
                 // bezirk.sendEvent(createReminderEvent);
                 //System.err.println();
                 break;
@@ -83,6 +106,18 @@ public class Analyzer {
                 bezirk.sendEvent(deleteReminderEvent);
                 System.err.println("");
                 break;
+            case 3:
+                Scanner s3 = new Scanner(System.in);
+                System.err.println("Introduza 1ª data:");
+                String data01 = s3.nextLine();
+                System.err.println("Introduza 2ª data:");
+                String data02 = s3.nextLine();
+                Date[] time1 = new Date[2];
+                time1[0 ]= new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data01);
+                time1[1 ]= new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss").parse(data02);
+
+                changePeriodDay(time1);
+                break;
             case 8:
                 online = false;
                 System.err.println("Sensor Stopped");
@@ -90,24 +125,27 @@ public class Analyzer {
                 break;
         }
     }
-
-    private static void printMenu() {
-        System.err.println("+***************************************************************************************+");
-        System.err.println("* This is a door bell detector Mock that uses de input values to simulate a real input. *");
-        System.err.println("+***************************************************************************************+");
-        System.err.println("");
-        System.err.println("1 - Criar Lembrete");
-        System.err.println("2 - apagar Lembrete");
-        System.err.println("8 - Stop sensor");
-        System.err.println("9 - Help");
+    private static void changePeriodDay(Date[] day){
+        String configFilePath = "src/utils/config.properties";
+        try {
+            FileInputStream propsInput = new FileInputStream(configFilePath);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+            prop.setProperty("PERIODO_DIA",String.valueOf(day[0] + ";" + day[1]));;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         new Analyzer();
         System.err.println("This product has an Analiza ");
 
         Scanner s = new Scanner(System.in);
-        printMenu();
+        System.out.println(I18N.getString(ANALYZER_MENU));
+
         while (online){
             int in = s.nextInt();
             processInput(in);

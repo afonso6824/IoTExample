@@ -8,11 +8,15 @@ import utils.Messages;
 import utils.eventos.CloseDoorEvent;
 import utils.eventos.OpenDoorEvent;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Time;
+import java.util.Properties;
 import java.util.Scanner;
 
 import static utils.Messages.*;
-//VISTO
+
 public class DoorSensorZirk {
     private Bezirk bezirk;
 
@@ -20,12 +24,27 @@ public class DoorSensorZirk {
     private Boolean online = true;
 
     public DoorSensorZirk() {
-
+        this.register();
         BezirkMiddleware.initialize();
         bezirk = BezirkMiddleware.registerZirk("Door Movement Sensor Zirk");
         System.err.println(ZIRK_INSTANCE);
     }
 
+    private void register(){
+        String configFilePath = "src/utils/config.properties";
+        try {
+            FileInputStream propsInput = new FileInputStream(configFilePath);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+            String property = prop.getProperty("APARELHOS");
+            property = property + "Sensor;";
+            prop.setProperty("APARELHOS",property);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void start() {
         Scanner s = new Scanner(System.in);
         while (online) {
@@ -48,9 +67,19 @@ public class DoorSensorZirk {
                 break;
             case 1:
                 doorOpen = true;
-                OpenDoorEvent openDoorEvent = new OpenDoorEvent();
-                bezirk.sendEvent(openDoorEvent);
                 System.out.println(I18N.getString(DOOR_OPEN));
+
+
+                try {
+                    wait(getDoorTime());
+                    if (doorOpen){
+                        OpenDoorEvent openDoorEvent = new OpenDoorEvent();
+                        bezirk.sendEvent(openDoorEvent);
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
                 break;
             case 2:
                 doorOpen = false;
@@ -58,26 +87,52 @@ public class DoorSensorZirk {
                 bezirk.sendEvent(closeDoorEvent);
                 System.out.println(I18N.getString(DOOR_CLOSED));
                 break;
+            case 3:
+                Scanner s = new Scanner(System.in);
+                System.err.println("Introduza tempo:");
+                int time = s.nextInt();
+                changeTime(time);
+                break;
         }
     }
 
-   /* private static void printMenu() {
-        System.err.println("+************************************************************************************+");
-        System.err.println("* This is a Mock sensor that uses de input values to simulate a real movement input. *");
-        System.err.println("+************************************************************************************+");
-        System.err.println("");
-        System.err.println("1 - Open Door");
-        System.err.println("2 - Close Door");
-        System.err.println("8 - Stop sensor");
-        System.err.println("9 - Help");
-    }*/
+    private void changeTime(int time){
+        String configFilePath = "src/utils/config.properties";
+        try {
+            FileInputStream propsInput = new FileInputStream(configFilePath);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+            prop.setProperty("TEMPO_PORTA_ABERTA",String.valueOf(time));;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private int getDoorTime(){
+        int time = 0;
+        String configFilePath = "src/utils/config.properties";
+        try {
+            FileInputStream propsInput = new FileInputStream(configFilePath);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+            String property = prop.getProperty("TEMPO_PORTA_ABERTA");
+            time = Integer.parseInt(property) * 1000;
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return time;
+    }
+
 
     public static void main(String args[]) throws InterruptedException {
         DoorSensorZirk doorSensorZirk = new DoorSensorZirk();
         System.out.println(I18N.getString(DOOR_SENSOR_ANNOUNCEMENT));
 
         System.out.println(I18N.getString(DOOR_SENSOR_MENU));
-        //printMenu();
+
 
         doorSensorZirk.start();
     }

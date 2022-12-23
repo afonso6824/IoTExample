@@ -21,14 +21,6 @@ public class LampadaController {
         return this.status;
     }
 
-    @Override
-    public String toString() {
-        //TODO delete
-        if (this.isOn()){
-            return "Light is on";
-        }else {
-            return "Light is off";
-        }
-    }
+
 
 }

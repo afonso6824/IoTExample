@@ -8,6 +8,11 @@ import com.bezirk.middleware.messages.EventSet;
 import utils.I18N;
 import utils.eventos.RingSirenEvent;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import static utils.Messages.*;
 
 public class Sirene {
@@ -15,6 +20,7 @@ public class Sirene {
     private final SireneController sireneController;
 
     public Sirene() {
+        this.register();
         BezirkMiddleware.initialize();
         Bezirk bezirk = BezirkMiddleware.registerZirk("Sirene Zirk");
         System.err.println(ZIRK_INSTANCE);
@@ -37,7 +43,22 @@ public class Sirene {
                 }
             }
         });
-        //todo turn off
+
+    }
+    private void register(){
+        String configFilePath = "src/utils/config.properties";
+        try {
+            FileInputStream propsInput = new FileInputStream(configFilePath);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+            String property = prop.getProperty("APARELHOS");
+            property = property + "Sirene;";
+            prop.setProperty("APARELHOS",property);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
         public static void main(String[] args) {
             Sirene sirene = new Sirene();

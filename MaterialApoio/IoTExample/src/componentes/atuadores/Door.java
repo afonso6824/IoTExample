@@ -18,9 +18,5 @@ public class Door {
         return open;
     }
 
-    @Override
-    public String toString() {
-        //TODO delete
-        return "Door is ";
-    }
+
 }

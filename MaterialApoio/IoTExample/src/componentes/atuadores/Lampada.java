@@ -9,6 +9,13 @@ import utils.I18N;
 import utils.Messages;
 import utils.eventos.LightsOFFEvent;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+import static utils.Messages.LAMP_OFF;
+import static utils.Messages.LAMP_ANNOUNCEMENT;
 import static utils.Messages.*;
 
 public class Lampada {
@@ -16,6 +23,7 @@ public class Lampada {
     private final LampadaController lampadaController;
 
     public Lampada(){
+        this.register();
         BezirkMiddleware.initialize();
         Bezirk bezirk = BezirkMiddleware.registerZirk("Lock Zirk");
         System.err.println(ZIRK_INSTANCE);
@@ -33,6 +41,22 @@ public class Lampada {
                 }
             }
         });
+    }
+
+    private void register(){
+        String configFilePath = "src/utils/config.properties";
+        try {
+            FileInputStream propsInput = new FileInputStream(configFilePath);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+            String property = prop.getProperty("APARELHOS");
+            property = property + "Lampada;";
+            prop.setProperty("APARELHOS",property);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -8,6 +8,13 @@ import com.bezirk.middleware.messages.EventSet;
 
 import utils.I18N;
 import utils.eventos.BellRungEvent;
+import utils.eventos.RingSirenEvent;
+import utils.eventos.SendWarningEvent;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 
 import static utils.Messages.*;
 
@@ -26,7 +33,13 @@ public class AnalizaCampainha {
                     final BellRungEvent bellEvent = (BellRungEvent) event;
 
                     //do something
-                    //TODO se tem sirene faz soar sirene else aviso
+                    if (hasSiren()){
+                        RingSirenEvent ringSirenEvent = new RingSirenEvent();
+                        bezirk.sendEvent(ringSirenEvent);
+                    }else {
+                        SendWarningEvent sendWarningEvent = new SendWarningEvent("Campainha tocada");
+                        bezirk.sendEvent(sendWarningEvent);
+                    }
 
                 }
             }
@@ -34,7 +47,26 @@ public class AnalizaCampainha {
         bezirk.subscribe(bellRungEvents);
     }
 
+    private boolean hasSiren(){
+            boolean hasSiren= false;
+            String configFilePath = "src/utils/config.properties";
+            try {
+                FileInputStream propsInput = new FileInputStream(configFilePath);
+                Properties prop = new Properties();
+                prop.load(propsInput);
+                String property = prop.getProperty("APARELHOS");
+                String[] props = property.split(";");
+                for (String s: props) {
+                    hasSiren = hasSiren || s.equals("SIRENE");
+                }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return hasSiren;
 
+    }
 
 
    public static void main(String args[]) {

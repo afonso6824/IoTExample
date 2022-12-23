@@ -10,6 +10,11 @@ import utils.I18N;
 import utils.Messages;
 import utils.eventos.DoorUnlockedEvent;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import static utils.Messages.LOCK_ANNOUNCEMENT;
 import static utils.Messages.ZIRK_INSTANCE;
 
@@ -21,6 +26,7 @@ public class Fechadura {
         this(1234);
     }
     public Fechadura(int code){
+        this.register();
         BezirkMiddleware.initialize();
         Bezirk bezirk = BezirkMiddleware.registerZirk("Lock Zirk");
         System.err.println(ZIRK_INSTANCE);
@@ -37,7 +43,21 @@ public class Fechadura {
             }
         });
     }
-
+    private void register(){
+        String configFilePath = "src/utils/config.properties";
+        try {
+            FileInputStream propsInput = new FileInputStream(configFilePath);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+            String property = prop.getProperty("APARELHOS");
+            property = property + "Fechadura;";
+            prop.setProperty("APARELHOS",property);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public String toString() {
         return fechaduraController.toString();

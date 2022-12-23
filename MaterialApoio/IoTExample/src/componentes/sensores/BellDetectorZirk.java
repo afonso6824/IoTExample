@@ -7,6 +7,10 @@ import utils.eventos.BellRungEvent;
 import utils.eventos.OpenDoorEvent;
 import utils.I18N;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.Scanner;
 
 import static utils.Messages.*;
@@ -19,11 +23,26 @@ public class BellDetectorZirk {
 
 
     public BellDetectorZirk() {
+        this.register();
         BezirkMiddleware.initialize();
         bezirk = BezirkMiddleware.registerZirk("Door Bell Detector Zirk");
-        System.err.println(ZIRK_INSTANCE);
+        System.out.println(ZIRK_INSTANCE);
     }
-
+    private void register(){
+        String configFilePath = "src/utils/config.properties";
+        try {
+            FileInputStream propsInput = new FileInputStream(configFilePath);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+            String property = prop.getProperty("APARELHOS");
+            property = property + "Campainha;";
+            prop.setProperty("APARELHOS",property);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void processInput(int in) {
         switch (in) {
             case 8:
