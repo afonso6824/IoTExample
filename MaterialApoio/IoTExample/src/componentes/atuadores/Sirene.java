@@ -5,7 +5,10 @@ import com.bezirk.middleware.addressing.ZirkEndPoint;
 import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import com.bezirk.middleware.messages.Event;
 import com.bezirk.middleware.messages.EventSet;
+import utils.I18N;
 import utils.eventos.RingSirenEvent;
+
+import static utils.Messages.*;
 
 public class Sirene {
 
@@ -13,7 +16,7 @@ public class Sirene {
 
     public Sirene() {
         BezirkMiddleware.initialize();
-        Bezirk bezirk = BezirkMiddleware.registerZirk("Lock Zirk");
+        Bezirk bezirk = BezirkMiddleware.registerZirk("Sirene Zirk");
         System.err.println("Got Bezirk instance");
         sireneController = new SireneController();
 
@@ -24,8 +27,13 @@ public class Sirene {
             public void receiveEvent(Event event, ZirkEndPoint sender) {
                 if (event instanceof RingSirenEvent) {
                     final RingSirenEvent ringSirenEvent = (RingSirenEvent) event;
-                    System.err.println("\nReceived air quality update: " + ringSirenEvent.toString());
                     sireneController.ring();
+                    try {
+                        this.wait(5000);
+                        sireneController.stop();
+                    } catch (InterruptedException e) {
+                        System.err.println(I18N.getString(SIRENE_ERROR));
+                    }
                 }
             }
         });
@@ -33,6 +41,6 @@ public class Sirene {
     }
         public static void main(String[] args) {
             Sirene sirene = new Sirene();
-
+            System.out.println(I18N.getString(SIRENE_ANNOUNCEMENT));
     }
 }

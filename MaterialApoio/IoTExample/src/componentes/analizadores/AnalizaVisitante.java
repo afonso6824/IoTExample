@@ -6,12 +6,16 @@ import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import com.bezirk.middleware.messages.Event;
 import com.bezirk.middleware.messages.EventSet;
 
+import utils.I18N;
+import utils.Messages;
 import utils.eventos.OpenDoorEvent;
 import utils.eventos.BellRungEvent;
 import utils.eventos.SendMessageEvent;
 
 import java.sql.Time;
 import java.util.Date;
+
+import static utils.Messages.VISITOR_ANALYZER_ANNOUNCEMENT;
 
 public class AnalizaVisitante {
     //todo periodo
@@ -29,7 +33,7 @@ public class AnalizaVisitante {
             public void receiveEvent(Event event, ZirkEndPoint sender) {
                 if (event instanceof BellRungEvent) {
                     final BellRungEvent bellEvent = (BellRungEvent) event;
-                    System.err.println("\nReceived air quality update: " + bellEvent.toString());
+
                     openDoorEvents.setEventReceiver(new EventSet.EventReceiver() {
                         @Override
                         public void receiveEvent(Event event, ZirkEndPoint sender) {
@@ -53,7 +57,7 @@ public class AnalizaVisitante {
 
     public static void main(String args[]) {
         new AnalizaVisitante();
-        System.err.println("This product has an Analiza Visitante");
+        System.out.println(I18N.getString(VISITOR_ANALYZER_ANNOUNCEMENT));
     }
 
 }

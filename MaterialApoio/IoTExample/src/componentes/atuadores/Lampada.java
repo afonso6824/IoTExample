@@ -5,7 +5,12 @@ import com.bezirk.middleware.addressing.ZirkEndPoint;
 import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import com.bezirk.middleware.messages.Event;
 import com.bezirk.middleware.messages.EventSet;
+import utils.I18N;
+import utils.Messages;
 import utils.eventos.LightsOFFEvent;
+
+import static utils.Messages.LAMP_OFF;
+import static utils.Messages.lAMP_ANNOUNCEMENT;
 
 public class Lampada {
 
@@ -24,13 +29,11 @@ public class Lampada {
             public void receiveEvent(Event event, ZirkEndPoint sender) {
                 if (event instanceof LightsOFFEvent) {
                     final LightsOFFEvent lightsOFFEvent = (LightsOFFEvent) event;
-                    System.err.println("\nReceived air quality update: " + lightsEvents.toString());
                     lampadaController.turnOff();
-                    System.out.println(lampadaController.toString());
+
                 }
             }
         });
-        //todo turn on
     }
 
     @Override
@@ -40,6 +43,6 @@ public class Lampada {
 
     public static void main(String[] args) {
         Lampada lampada = new Lampada();
-        System.out.println(lampada.toString());
+        System.out.println(I18N.getString(lAMP_ANNOUNCEMENT));
     }
 }

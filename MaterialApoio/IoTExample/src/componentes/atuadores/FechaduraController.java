@@ -1,5 +1,11 @@
 package componentes.atuadores;
 
+import utils.I18N;
+import utils.Messages;
+
+import static utils.Messages.DOOR_CLOSED;
+import static utils.Messages.DOOR_OPEN;
+
 public class FechaduraController {
     private int code;
     private Door door;
@@ -14,9 +20,11 @@ public class FechaduraController {
     }
     public void openDoor() {
         door.openDoor();
+        System.out.println(I18N.getString(DOOR_OPEN));
     }
     public void closeDoor() {
         door.closeDoor();
+        System.out.println(I18N.getString(DOOR_CLOSED));
     }
 
     @Override

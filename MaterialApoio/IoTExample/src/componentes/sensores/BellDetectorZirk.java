@@ -5,8 +5,11 @@ import com.bezirk.middleware.Bezirk;
 import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import utils.eventos.BellRungEvent;
 import utils.eventos.OpenDoorEvent;
+import utils.I18N;
 
 import java.util.Scanner;
+
+import static utils.Messages.*;
 
 //VISTO
 public class BellDetectorZirk {
@@ -14,7 +17,7 @@ public class BellDetectorZirk {
 
     private Boolean online = true;
 
-    //TODO ver parte dos aspects na lingua, ou seja como por as coisas a mandarem mensagens no idioma escolhido
+
     public BellDetectorZirk() {
         BezirkMiddleware.initialize();
         bezirk = BezirkMiddleware.registerZirk("Door Bell Detector Zirk");
@@ -25,23 +28,23 @@ public class BellDetectorZirk {
         switch (in) {
             case 8:
                 online = false;
-                System.err.println("Sensor Stopped");
+                System.out.println(I18N.getString(SENSOR_STOP));
                 System.exit(0);
                 break;
             case 9:
-                printMenu();
+                System.out.println(I18N.getString(BELL_DETECTOR_MENU));
                 break;
             case 1:
                 BellRungEvent bellRungEvent = new BellRungEvent();
                 bezirk.sendEvent(bellRungEvent);
-                System.err.println("Published bell rung update: " + bellRungEvent.toString());
+                System.out.println(I18N.getString(BELL_RING));
 
                 try {
                     this.wait(5000);
                 } catch (InterruptedException e) {
-                    System.err.println("Bell detector couldn't wait 5 sec before resetting");
+                    System.err.println(I18N.getString(BELL_ERROR));
                 }
-                System.err.println("Bell stopped");
+                System.out.println(I18N.getString(BELL_STOP));
                 break;
         }
     }
@@ -54,7 +57,7 @@ public class BellDetectorZirk {
         }
     }
 
-    private static void printMenu() {
+/*    private static void printMenu() {
         System.err.println("+***************************************************************************************+");
         System.err.println("* This is a door bell detector Mock that uses de input values to simulate a real input. *");
         System.err.println("+***************************************************************************************+");
@@ -62,13 +65,14 @@ public class BellDetectorZirk {
         System.err.println("1 - Ring Bell(last 5 sec)");
         System.err.println("8 - Stop sensor");
         System.err.println("9 - Help");
-    }
+    }*/
     public static void main(String args[]) throws InterruptedException {
         BellDetectorZirk bellDetectorZirk = new BellDetectorZirk();
-        System.err.println("This product has a Door Bell detector");
-        //TODO
-        //System.err.println(I18N.getString(DEVICE_RUNNING, "Door Bell Detector"));
-        printMenu();
+        System.out.println(I18N.getString(BELL_DETECTOR_ANNOUNCEMENT));
+
+
+        //printMenu();
+        System.out.println(I18N.getString(BELL_DETECTOR_MENU));
 
         bellDetectorZirk.start();
     }

@@ -3,19 +3,22 @@ package componentes.sensores;
 
 import com.bezirk.middleware.Bezirk;
 import com.bezirk.middleware.java.proxy.BezirkMiddleware;
+import utils.I18N;
+import utils.Messages;
 import utils.eventos.CloseDoorEvent;
 import utils.eventos.OpenDoorEvent;
 
 import java.sql.Time;
 import java.util.Scanner;
 
+import static utils.Messages.*;
+//VISTO
 public class DoorSensorZirk {
     private Bezirk bezirk;
 
     private boolean doorOpen = false;
     private Boolean online = true;
 
-    //TODO ver parte dos aspects na lingua, ou seja como por as coisas a mandarem mensagens no idioma escolhido
     public DoorSensorZirk() {
 
         BezirkMiddleware.initialize();
@@ -37,27 +40,28 @@ public class DoorSensorZirk {
             case 8:
                 doorOpen = false;
                 online = false;
-                System.err.println("Sensor Stopped");
+                System.out.println(I18N.getString(SENSOR_STOP));
                 System.exit(0);
                 break;
             case 9:
-                printMenu();
+                System.out.println(I18N.getString(DOOR_SENSOR_MENU));
                 break;
             case 1:
                 doorOpen = true;
                 OpenDoorEvent openDoorEvent = new OpenDoorEvent();
                 bezirk.sendEvent(openDoorEvent);
-                System.err.println("Published open door update: " + openDoorEvent.toString());
+                System.out.println(I18N.getString(DOOR_OPEN));
                 break;
             case 2:
                 doorOpen = false;
                 CloseDoorEvent closeDoorEvent = new CloseDoorEvent();
-                System.err.println("Door closed");
+                bezirk.sendEvent(closeDoorEvent);
+                System.out.println(I18N.getString(DOOR_CLOSED));
                 break;
         }
     }
 
-    private static void printMenu() {
+   /* private static void printMenu() {
         System.err.println("+************************************************************************************+");
         System.err.println("* This is a Mock sensor that uses de input values to simulate a real movement input. *");
         System.err.println("+************************************************************************************+");
@@ -66,14 +70,14 @@ public class DoorSensorZirk {
         System.err.println("2 - Close Door");
         System.err.println("8 - Stop sensor");
         System.err.println("9 - Help");
-    }
+    }*/
 
     public static void main(String args[]) throws InterruptedException {
         DoorSensorZirk doorSensorZirk = new DoorSensorZirk();
-        System.err.println("This product has a Door Movement Sensor");
-        //TODO
-        //System.err.println(I18N.getString(DEVICE_RUNNING, "Door Movement Sensor"));
-        printMenu();
+        System.out.println(I18N.getString(DOOR_SENSOR_ANNOUNCEMENT));
+
+        System.out.println(I18N.getString(DOOR_SENSOR_MENU));
+        //printMenu();
 
         doorSensorZirk.start();
     }
