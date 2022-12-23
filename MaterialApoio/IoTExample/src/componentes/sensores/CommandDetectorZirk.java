@@ -56,6 +56,7 @@ public class CommandDetectorZirk {
         System.err.println("+************************************************************************************+");
         System.err.println("");
         System.err.println("1 - Press Button SOS");
+        //todo so mostar se houver aparelhos
         System.err.println("2 - Press Button Lights OFF");
         System.err.println("3 - Press Button Siren ON");
         System.err.println("4 - Press Button Open Door");
@@ -65,7 +66,7 @@ public class CommandDetectorZirk {
     public static void main(String args[]) throws InterruptedException {
         CommandDetectorZirk commandDetectorZirk = new CommandDetectorZirk();
         System.err.println("This product has a command button detector");
-        //TODO fix null pointer exception
+        //TODO
         //System.err.println(I18N.getString(DEVICE_RUNNING, "Command Button Detector"));
         printMenu();
 

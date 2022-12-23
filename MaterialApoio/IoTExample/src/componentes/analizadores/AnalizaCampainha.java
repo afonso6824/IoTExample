@@ -8,6 +8,7 @@ import com.bezirk.middleware.messages.EventSet;
 
 import utils.eventos.BellRungEvent;
 
+
 public class AnalizaCampainha {
     public AnalizaCampainha() {
         BezirkMiddleware.initialize();

@@ -3,12 +3,16 @@ package utils.eventos;
 import com.bezirk.middleware.messages.Event;
 
 public class SendWarningEvent extends Event {
+    private String msg;
 
-    //TODO recheck ID
     private static final long serialVersionUID = 1L;
-    private final boolean WarningSent;
-    public SendWarningEvent(){
-        WarningSent = true;
+
+    public SendWarningEvent(String msg){
+       this.msg=msg;
+    }
+
+    public String getMsg() {
+        return msg;
     }
 
     public String toString() {

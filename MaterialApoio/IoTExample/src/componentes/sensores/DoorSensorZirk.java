@@ -3,17 +3,21 @@ package componentes.sensores;
 
 import com.bezirk.middleware.Bezirk;
 import com.bezirk.middleware.java.proxy.BezirkMiddleware;
+import utils.eventos.CloseDoorEvent;
 import utils.eventos.OpenDoorEvent;
 
+import java.sql.Time;
 import java.util.Scanner;
 
 public class DoorSensorZirk {
     private Bezirk bezirk;
+
     private boolean doorOpen = false;
     private Boolean online = true;
 
     //TODO ver parte dos aspects na lingua, ou seja como por as coisas a mandarem mensagens no idioma escolhido
     public DoorSensorZirk() {
+
         BezirkMiddleware.initialize();
         bezirk = BezirkMiddleware.registerZirk("Door Movement Sensor Zirk");
         System.err.println("Got Bezirk instance");
@@ -27,7 +31,7 @@ public class DoorSensorZirk {
         }
     }
 
-    //TODO ver se vale a pena mandar evento periodico
+
     private void processInput(int in) {
         switch (in) {
             case 8:
@@ -47,6 +51,7 @@ public class DoorSensorZirk {
                 break;
             case 2:
                 doorOpen = false;
+                CloseDoorEvent closeDoorEvent = new CloseDoorEvent();
                 System.err.println("Door closed");
                 break;
         }
@@ -66,7 +71,7 @@ public class DoorSensorZirk {
     public static void main(String args[]) throws InterruptedException {
         DoorSensorZirk doorSensorZirk = new DoorSensorZirk();
         System.err.println("This product has a Door Movement Sensor");
-        //TODO fix null pointer exception
+        //TODO
         //System.err.println(I18N.getString(DEVICE_RUNNING, "Door Movement Sensor"));
         printMenu();
 

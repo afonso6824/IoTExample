@@ -3,10 +3,12 @@ package componentes.sensores;
 
 import com.bezirk.middleware.Bezirk;
 import com.bezirk.middleware.java.proxy.BezirkMiddleware;
+import utils.eventos.BellRungEvent;
 import utils.eventos.OpenDoorEvent;
 
 import java.util.Scanner;
 
+//VISTO
 public class BellDetectorZirk {
     private Bezirk bezirk;
 
@@ -30,16 +32,16 @@ public class BellDetectorZirk {
                 printMenu();
                 break;
             case 1:
-                OpenDoorEvent openDoorEvent = new OpenDoorEvent();
-                bezirk.sendEvent(openDoorEvent);
-                System.err.println("Published bell rung update: " + openDoorEvent.toString());
+                BellRungEvent bellRungEvent = new BellRungEvent();
+                bezirk.sendEvent(bellRungEvent);
+                System.err.println("Published bell rung update: " + bellRungEvent.toString());
 
-                try {//TODO change to different spot??
+                try {
                     this.wait(5000);
                 } catch (InterruptedException e) {
                     System.err.println("Bell detector couldn't wait 5 sec before resetting");
                 }
-                System.err.println("Bell ringing stopped");
+                System.err.println("Bell stopped");
                 break;
         }
     }
@@ -64,7 +66,7 @@ public class BellDetectorZirk {
     public static void main(String args[]) throws InterruptedException {
         BellDetectorZirk bellDetectorZirk = new BellDetectorZirk();
         System.err.println("This product has a Door Bell detector");
-        //TODO fix null pointer exception
+        //TODO
         //System.err.println(I18N.getString(DEVICE_RUNNING, "Door Bell Detector"));
         printMenu();
 

@@ -10,6 +10,11 @@ public class ButtonPressedEvent extends Event {
     public ButtonPressedEvent(int number){
         buttonPressed = number;
     }
+
+    public int getButtonPressed() {
+        return buttonPressed;
+    }
+
     public String toString() {
         String toPrint;
         switch (this.buttonPressed){

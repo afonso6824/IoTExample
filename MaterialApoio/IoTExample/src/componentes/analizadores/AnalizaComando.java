@@ -6,7 +6,7 @@ import com.bezirk.middleware.java.proxy.BezirkMiddleware;
 import com.bezirk.middleware.messages.Event;
 import com.bezirk.middleware.messages.EventSet;
 
-import utils.eventos.ButtonPressedEvent;
+import utils.eventos.*;
 
 public class AnalizaComando {
 
@@ -23,10 +23,27 @@ public class AnalizaComando {
                     final ButtonPressedEvent buttonEvent = (ButtonPressedEvent) event;
                     System.err.println("\nReceived air quality update: " + buttonEvent.toString());
                     //do something
-                    //TODO case 1 mensagem exterior e aviso
-                    //TODO case 2 comando + lampadas apagar luzes
-                    //todo case 3 comando + sirene ativar sirene
-                    //todo case 4 comando + fechadura abrir porta
+                    int button = buttonEvent.getButtonPressed();
+                    switch (button){
+                        case 1:
+                            SendMessageEvent sendMessageEvent = new SendMessageEvent("Pedido de ajuda enviado");
+                            SendWarningEvent sendWarningEvent = new SendWarningEvent("Pedido de ajuda");
+                            bezirk.sendEvent(sendMessageEvent);
+                            bezirk.sendEvent(sendWarningEvent);
+                            break;
+                        case 2:
+                            LightsOFFEvent lightsOFFEvent= new LightsOFFEvent();
+                            bezirk.sendEvent(lightsOFFEvent);
+                            break;
+                        case 3:
+                            RingSirenEvent ringSirenEvent = new RingSirenEvent();
+                            bezirk.sendEvent(ringSirenEvent);
+                            break;
+                        case 4:
+                            DoorUnlockedEvent doorUnlockedEvent = new DoorUnlockedEvent();
+                            bezirk.sendEvent(doorUnlockedEvent);
+                            break;
+                    }
 
                 }
             }
