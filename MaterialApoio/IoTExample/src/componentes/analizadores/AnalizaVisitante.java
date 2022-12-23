@@ -16,6 +16,7 @@ import java.sql.Time;
 import java.util.Date;
 
 import static utils.Messages.VISITOR_ANALYZER_ANNOUNCEMENT;
+import static utils.Messages.ZIRK_INSTANCE;
 
 public class AnalizaVisitante {
     //todo periodo
@@ -23,7 +24,7 @@ public class AnalizaVisitante {
     public AnalizaVisitante() {
         BezirkMiddleware.initialize();
         final Bezirk bezirk = BezirkMiddleware.registerZirk("Analiza Visitante Zirk");
-        System.err.println("Got Bezirk instance");
+        System.err.println(ZIRK_INSTANCE);
 
         final EventSet openDoorEvents = new EventSet(OpenDoorEvent.class,BellRungEvent.class);
 

@@ -23,6 +23,7 @@ public class LampadaController {
 
     @Override
     public String toString() {
+        //TODO
         if (this.isOn()){
             return "Light is on";
         }else {

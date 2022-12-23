@@ -20,6 +20,7 @@ public class Door {
 
     @Override
     public String toString() {
+        //TODO
         return "Door is ";
     }
 }

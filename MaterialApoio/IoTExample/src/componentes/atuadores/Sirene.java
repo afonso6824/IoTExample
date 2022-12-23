@@ -17,7 +17,7 @@ public class Sirene {
     public Sirene() {
         BezirkMiddleware.initialize();
         Bezirk bezirk = BezirkMiddleware.registerZirk("Sirene Zirk");
-        System.err.println("Got Bezirk instance");
+        System.err.println(ZIRK_INSTANCE);
         sireneController = new SireneController();
 
         final EventSet ringSireneEvents = new EventSet(RingSirenEvent.class);

@@ -13,8 +13,7 @@ import utils.eventos.SendWarningEvent;
 
 import java.sql.Time;
 
-import static utils.Messages.DOOR_ANALYZER_ANNOUNCEMENT;
-import static utils.Messages.VISITOR_ANALYZER_ANNOUNCEMENT;
+import static utils.Messages.*;
 
 public class AnalizaPorta {
     private Time periodo;
@@ -23,7 +22,7 @@ public class AnalizaPorta {
         //TODO VER PERIODO E ADICIONAR EVENTO
         BezirkMiddleware.initialize();
          bezirk = BezirkMiddleware.registerZirk("Analiza Porta Zirk");
-        System.err.println("Got Bezirk instance");
+        System.err.println(ZIRK_INSTANCE);
         final EventSet openDoorEvents = new EventSet(OpenDoorEvent.class, CloseDoorEvent.class);
 
         openDoorEvents.setEventReceiver(new EventSet.EventReceiver() {

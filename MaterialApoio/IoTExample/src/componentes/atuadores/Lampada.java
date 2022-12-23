@@ -9,8 +9,7 @@ import utils.I18N;
 import utils.Messages;
 import utils.eventos.LightsOFFEvent;
 
-import static utils.Messages.LAMP_OFF;
-import static utils.Messages.lAMP_ANNOUNCEMENT;
+import static utils.Messages.*;
 
 public class Lampada {
 
@@ -19,7 +18,7 @@ public class Lampada {
     public Lampada(){
         BezirkMiddleware.initialize();
         Bezirk bezirk = BezirkMiddleware.registerZirk("Lock Zirk");
-        System.err.println("Got Bezirk instance");
+        System.err.println(ZIRK_INSTANCE);
         lampadaController = new LampadaController();
 
         final EventSet lightsEvents = new EventSet(LightsOFFEvent.class);
@@ -43,6 +42,6 @@ public class Lampada {
 
     public static void main(String[] args) {
         Lampada lampada = new Lampada();
-        System.out.println(I18N.getString(lAMP_ANNOUNCEMENT));
+        System.out.println(I18N.getString(LAMP_ANNOUNCEMENT));
     }
 }

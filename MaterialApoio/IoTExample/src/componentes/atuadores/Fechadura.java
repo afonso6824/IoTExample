@@ -11,6 +11,7 @@ import utils.Messages;
 import utils.eventos.DoorUnlockedEvent;
 
 import static utils.Messages.LOCK_ANNOUNCEMENT;
+import static utils.Messages.ZIRK_INSTANCE;
 
 
 public class Fechadura {
@@ -22,8 +23,7 @@ public class Fechadura {
     public Fechadura(int code){
         BezirkMiddleware.initialize();
         Bezirk bezirk = BezirkMiddleware.registerZirk("Lock Zirk");
-        //todo mudar para aspect todos os got bezirk
-        System.err.println("Got Bezirk instance");
+        System.err.println(ZIRK_INSTANCE);
         fechaduraController = new FechaduraController(code);
 
         final EventSet doorUnlockedEvents = new EventSet(DoorUnlockedEvent.class);

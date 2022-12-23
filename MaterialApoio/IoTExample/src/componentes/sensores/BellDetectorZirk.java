@@ -21,7 +21,7 @@ public class BellDetectorZirk {
     public BellDetectorZirk() {
         BezirkMiddleware.initialize();
         bezirk = BezirkMiddleware.registerZirk("Door Bell Detector Zirk");
-        System.err.println("Got Bezirk instance");
+        System.err.println(ZIRK_INSTANCE);
     }
 
     private void processInput(int in) {

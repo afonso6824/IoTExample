@@ -23,7 +23,7 @@ public class DoorSensorZirk {
 
         BezirkMiddleware.initialize();
         bezirk = BezirkMiddleware.registerZirk("Door Movement Sensor Zirk");
-        System.err.println("Got Bezirk instance");
+        System.err.println(ZIRK_INSTANCE);
     }
 
     private void start() {

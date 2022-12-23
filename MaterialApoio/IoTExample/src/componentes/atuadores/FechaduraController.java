@@ -30,6 +30,7 @@ public class FechaduraController {
     @Override
     public String toString() {
         if (door.isOpen()){
+            //TODO
             return "Door is open";
         }else {
             return "Door is closed";

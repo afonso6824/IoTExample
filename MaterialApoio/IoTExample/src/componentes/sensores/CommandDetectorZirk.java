@@ -19,7 +19,7 @@ public class CommandDetectorZirk {
     public CommandDetectorZirk() {
         BezirkMiddleware.initialize();
         bezirk = BezirkMiddleware.registerZirk("Command Button Detector Zirk");
-        System.err.println("Got Bezirk instance");
+        System.err.println(ZIRK_INSTANCE);
     }
 
     private void processInput(int in) {

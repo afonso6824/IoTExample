@@ -9,15 +9,14 @@ import com.bezirk.middleware.messages.EventSet;
 import utils.I18N;
 import utils.eventos.*;
 
-import static utils.Messages.COMMAND_ANALYZER_ANNOUNCEMENT;
-import static utils.Messages.DOOR_ANALYZER_ANNOUNCEMENT;
+import static utils.Messages.*;
 
 public class AnalizaComando {
 
     public AnalizaComando() {
         BezirkMiddleware.initialize();
         final Bezirk bezirk = BezirkMiddleware.registerZirk("Analiza Comando Zirk");
-        System.err.println("Got Bezirk instance");
+        System.err.println(ZIRK_INSTANCE);
         final EventSet buttonPressedEvents = new EventSet(ButtonPressedEvent.class);
 
         buttonPressedEvents.setEventReceiver(new EventSet.EventReceiver() {
