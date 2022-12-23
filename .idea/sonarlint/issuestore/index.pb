@@ -5,9 +5,3 @@ z
 JMaterialApoio/IoTExample/src/componentes/sensores/CommandDetectorZirk.java,2\6\265ad0801b70cccfbeaff56dccdce9103c0d79c6
 w
 GMaterialApoio/IoTExample/src/componentes/sensores/BellDetectorZirk.java,e\b\eb5a8d88e39660e54bd2351f19cea9e4dfc6ba63
-x
-HMaterialApoio/IoTExample/src/componentes/atuadores/FechadureAtuador.java,d\9\d911134c8006f2c860769593105c54817c947cea
-v
-FMaterialApoio/IoTExample/src/componentes/atuadores/LampadaAtuador.java,9\d\9df96ec5f5f5a74db97f3541339ca41a8b2ac917
-u
-EMaterialApoio/IoTExample/src/componentes/atuadores/SireneAtuador.java,5\e\5e5d4f797c46801eeb0062c7afd5fa68f9ce3006
