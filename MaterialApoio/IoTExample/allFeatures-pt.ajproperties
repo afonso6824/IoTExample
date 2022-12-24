@@ -1,3 +1,0 @@
-src.includes = src/
-src.excludes = src/utils/en_US.aj,\
-			   src/utils/Messages_en_US.properties
